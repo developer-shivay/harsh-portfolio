@@ -5,6 +5,14 @@ import './App.css'
 
 const navItems = ['about', 'experience', 'projects', 'contact']
 
+const domains = [
+  'Healthcare systems',
+  'Enterprise ERP',
+  'Real-time trading',
+  'Travel platforms',
+  'Mobile products',
+]
+
 const skills = [
   'HTML5',
   'CSS3',
@@ -95,6 +103,7 @@ const projects = [
     tags: ['React.js', 'Redux', 'Tailwind', 'WebSocket'],
     accent: 'violet',
     mark: 'BN',
+    detail: 'Live market intelligence',
   },
   {
     title: 'LinkEzPay',
@@ -104,6 +113,7 @@ const projects = [
     tags: ['React Native', 'Expo', 'Redux'],
     accent: 'cyan',
     mark: 'LP',
+    detail: 'Mobile payment experience',
   },
   {
     title: 'Trip Travel',
@@ -113,6 +123,7 @@ const projects = [
     tags: ['Next.js', 'Redux', 'Tailwind'],
     accent: 'orange',
     mark: 'TT',
+    detail: 'End-to-end booking flow',
   },
   {
     title: 'Trip Travel App',
@@ -122,6 +133,7 @@ const projects = [
     tags: ['React Native', 'Redux', 'REST API', 'Mobile UI'],
     accent: 'blue',
     mark: 'TA',
+    detail: 'Travel in your pocket',
   },
   {
     title: 'BN Market App',
@@ -131,6 +143,7 @@ const projects = [
     tags: ['React Native', 'Redux', 'WebSocket', 'REST API'],
     accent: 'green',
     mark: 'BM',
+    detail: 'Trading at market speed',
   },
   {
     title: 'Business ERP',
@@ -140,6 +153,7 @@ const projects = [
     tags: ['React.js', 'Redux', 'REST API', 'Dashboard'],
     accent: 'pink',
     mark: 'ERP',
+    detail: 'One system, every operation',
   },
   {
     title: 'Hospital HMS',
@@ -149,6 +163,7 @@ const projects = [
     tags: ['Angular', 'RxJS', 'REST API', 'Dashboard'],
     accent: 'teal',
     mark: 'HMS',
+    detail: 'Paperless clinical operations',
   },
 ]
 
@@ -212,6 +227,36 @@ function App() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const animatedElements = document.querySelectorAll('[data-motion]')
+    const motionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          entry.target.classList.add('is-visible')
+          motionObserver.unobserve(entry.target)
+        })
+      },
+      { threshold: 0.14, rootMargin: '0px 0px -60px' },
+    )
+
+    animatedElements.forEach((element) => motionObserver.observe(element))
+    return () => motionObserver.disconnect()
+  }, [])
+
+  const handleHeroPointerMove = (event) => {
+    const bounds = event.currentTarget.getBoundingClientRect()
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5
+    event.currentTarget.style.setProperty('--pointer-x', `${x * 18}px`)
+    event.currentTarget.style.setProperty('--pointer-y', `${y * 18}px`)
+  }
+
+  const resetHeroPointer = (event) => {
+    event.currentTarget.style.setProperty('--pointer-x', '0px')
+    event.currentTarget.style.setProperty('--pointer-y', '0px')
+  }
+
   return (
     <div className="site-shell">
       <header className="navbar">
@@ -254,7 +299,7 @@ function App() {
           <div className="hero-glow hero-glow--one" aria-hidden="true" />
           <div className="hero-glow hero-glow--two" aria-hidden="true" />
 
-          <div className="hero-content reveal">
+          <div className="hero-content hero-enter">
             <p className="eyebrow"><span /> Senior front-end developer / Ahmedabad</p>
             <h1>
               Engineering digital
@@ -275,11 +320,16 @@ function App() {
             </div>
             <div className="hero-meta">
               <span>Based in Ahmedabad, India</span>
-              <span>3+ years experience</span>
+              <span>2.5+ years experience</span>
             </div>
           </div>
 
-          <div className="hero-visual" aria-label="Interactive developer illustration">
+          <div
+            className="hero-visual hero-enter hero-enter--visual"
+            aria-label="Interactive developer illustration"
+            onPointerMove={handleHeroPointerMove}
+            onPointerLeave={resetHeroPointer}
+          >
             <div className="orbit orbit--one">
               <span>NG</span>
             </div>
@@ -330,13 +380,23 @@ function App() {
           </a>
         </section>
 
-        <section className="section about" id="about">
-          <div className="section-heading">
+        {/* <div className="domain-rail" aria-label="Professional domains">
+          <div className="domain-track">
+            {[...domains, ...domains].map((domain, index) => (
+              <span key={`${domain}-${index}`}>
+                {domain} <i />
+              </span>
+            ))}
+          </div>
+        </div> */}
+
+        <section className="section about numbered-section" id="about">
+          <div className="section-heading motion-reveal" data-motion>
             <p className="kicker">Introduction</p>
             <h2>Turning ideas into <span>clean experiences.</span></h2>
           </div>
 
-          <div className="about-layout">
+          <div className="about-layout motion-reveal motion-reveal--delay-1" data-motion>
             <div className="about-copy">
               <p>
                 I&apos;m a self-motivated front-end developer focused on building
@@ -356,7 +416,7 @@ function App() {
 
             <div className="stats">
               <article>
-                <strong>3+</strong>
+                <strong>2.5+</strong>
                 <span>Years of professional experience</span>
               </article>
               <article>
@@ -372,7 +432,12 @@ function App() {
 
           <div className="service-grid">
             {services.map((service) => (
-              <article className="service-card" key={service.title}>
+              <article
+                className="service-card motion-reveal"
+                data-motion
+                style={{ '--motion-delay': `${service.number * 70}ms` }}
+                key={service.title}
+              >
                 <span className="service-number">{service.number}</span>
                 <div className="service-icon"><Icon name={service.icon} /></div>
                 <h3>{service.title}</h3>
@@ -382,8 +447,8 @@ function App() {
           </div>
         </section>
 
-        <section className="section skills-section">
-          <div className="section-heading section-heading--row">
+        <section className="section skills-section numbered-section">
+          <div className="section-heading section-heading--row motion-reveal" data-motion>
             <div>
               <p className="kicker">My toolkit</p>
               <h2>Technologies I <span>work with.</span></h2>
@@ -392,22 +457,32 @@ function App() {
           </div>
           <div className="skill-cloud">
             {skills.map((skill, index) => (
-              <span style={{ '--delay': `${index * 80}ms` }} key={skill}>
+              <span
+                className="motion-reveal motion-reveal--scale"
+                data-motion
+                style={{ '--motion-delay': `${index * 45}ms` }}
+                key={skill}
+              >
                 {skill}
               </span>
             ))}
           </div>
         </section>
 
-        <section className="section experience" id="experience">
-          <div className="section-heading">
+        <section className="section experience numbered-section" id="experience">
+          <div className="section-heading motion-reveal" data-motion>
             <p className="kicker">What I have done so far</p>
             <h2>Work <span>experience.</span></h2>
           </div>
 
           <div className="timeline">
             {experiences.map((experience, index) => (
-              <article className="timeline-item" key={experience.company}>
+              <article
+                className="timeline-item motion-reveal motion-reveal--side"
+                data-motion
+                style={{ '--motion-delay': `${index * 110}ms` }}
+                key={experience.company}
+              >
                 <div className="timeline-date">{experience.date}</div>
                 <div className="timeline-node">{String(index + 1).padStart(2, '0')}</div>
                 <div className="timeline-card">
@@ -423,8 +498,8 @@ function App() {
           </div>
         </section>
 
-        <section className="section projects" id="projects">
-          <div className="section-heading section-heading--row">
+        <section className="section projects numbered-section" id="projects">
+          <div className="section-heading section-heading--row motion-reveal" data-motion>
             <div>
               <p className="kicker">Selected work</p>
               <h2>Projects with <span>real purpose.</span></h2>
@@ -442,7 +517,9 @@ function App() {
                   project.title === 'Hospital HMS' || project.title === 'BN Share Market'
                     ? 'project-card--featured'
                     : ''
-                }`}
+                } motion-reveal motion-reveal--scale`}
+                data-motion
+                style={{ '--motion-delay': `${(index % 3) * 90}ms` }}
                 key={project.title}
               >
                 <div className="project-visual">
@@ -451,10 +528,21 @@ function App() {
                     {project.title === 'Hospital HMS' ? 'Current flagship' : 'Case study'}
                   </span>
                   <div className="project-device">
-                    <span>{project.mark}</span>
-                    <i />
-                    <i />
-                    <i />
+                    <div className="device-topline">
+                      <span>{project.mark}</span>
+                      <small>{project.detail}</small>
+                    </div>
+                    <div className="device-chart">
+                      <i />
+                      <i />
+                      <i />
+                      <i />
+                      <i />
+                    </div>
+                    <div className="device-footer">
+                      <i />
+                      <i />
+                    </div>
                   </div>
                 </div>
                 <div className="project-info">
@@ -464,14 +552,15 @@ function App() {
                   <div className="tags">
                     {project.tags.map((tag) => <small key={tag}>{tag}</small>)}
                   </div>
+                  <span className="project-arrow" aria-hidden="true">↗</span>
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section contact" id="contact">
-          <div className="contact-panel">
+        <section className="section contact numbered-section" id="contact">
+          <div className="contact-panel motion-reveal motion-reveal--scale" data-motion>
             <div>
               <p className="kicker">Get in touch</p>
               <h2>Have a project in mind? <span>Let&apos;s build it.</span></h2>
