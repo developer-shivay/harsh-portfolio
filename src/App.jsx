@@ -3,15 +3,7 @@ import './App.css'
 
 /* eslint-disable react/prop-types */
 
-const navItems = ['about', 'experience', 'projects', 'contact']
-
-const domains = [
-  'Healthcare systems',
-  'Enterprise ERP',
-  'Real-time trading',
-  'Travel platforms',
-  'Mobile products',
-]
+const navItems = ['about', 'experience', 'applications', 'reviews', 'contact']
 
 const skills = [
   'HTML5',
@@ -98,8 +90,13 @@ const projects = [
   {
     title: 'BN Share Market',
     type: 'Trading web platform',
+    category: 'Web Application',
+    industry: 'Fintech',
+    platform: 'Responsive Web',
     description:
       'A real-time stock trading experience with live market updates, interactive charts, buying and selling flows, advanced filtering and downloadable reports.',
+    role: 'Frontend development and real-time integration',
+    features: ['Live market data', 'Interactive charts', 'Buy and sell flows', 'Reports and filtering'],
     tags: ['React.js', 'Redux', 'Tailwind', 'WebSocket'],
     accent: 'violet',
     mark: 'BN',
@@ -108,8 +105,13 @@ const projects = [
   {
     title: 'LinkEzPay',
     type: 'Mobile payment application',
+    category: 'Mobile Application',
+    industry: 'Digital Payments',
+    platform: 'iOS and Android',
     description:
       'A responsive React Native application with reusable interfaces, modern mobile patterns and Redux-powered state management.',
+    role: 'React Native UI and state management',
+    features: ['Payment workflows', 'Reusable mobile UI', 'Redux state', 'Responsive layouts'],
     tags: ['React Native', 'Expo', 'Redux'],
     accent: 'cyan',
     mark: 'LP',
@@ -118,8 +120,13 @@ const projects = [
   {
     title: 'Trip Travel',
     type: 'Travel booking website',
+    category: 'Website',
+    industry: 'Travel',
+    platform: 'Responsive Web',
     description:
       'A complete travel booking flow with secure authentication, dynamic package listings, filtering, detailed views and booking confirmation.',
+    role: 'Frontend development and API integration',
+    features: ['Secure authentication', 'Package discovery', 'Advanced filters', 'Booking confirmation'],
     tags: ['Next.js', 'Redux', 'Tailwind'],
     accent: 'orange',
     mark: 'TT',
@@ -128,8 +135,13 @@ const projects = [
   {
     title: 'Trip Travel App',
     type: 'Travel booking application',
+    category: 'Mobile Application',
+    industry: 'Travel',
+    platform: 'iOS and Android',
     description:
       'A mobile travel application for exploring destinations, filtering packages, viewing trip details and completing a smooth booking journey.',
+    role: 'Mobile application development',
+    features: ['Destination discovery', 'Package filters', 'Trip details', 'Mobile booking flow'],
     tags: ['React Native', 'Redux', 'REST API', 'Mobile UI'],
     accent: 'blue',
     mark: 'TA',
@@ -138,8 +150,13 @@ const projects = [
   {
     title: 'BN Market App',
     type: 'Stock trading application',
+    category: 'Mobile Application',
+    industry: 'Fintech',
+    platform: 'iOS and Android',
     description:
       'A real-time mobile trading application with live prices, WebSocket updates, interactive charts, stock search, secure buy and sell flows and shareable reports.',
+    role: 'Mobile UI and real-time data integration',
+    features: ['Live stock prices', 'Stock search', 'Trading workflows', 'Shareable reports'],
     tags: ['React Native', 'Redux', 'WebSocket', 'REST API'],
     accent: 'green',
     mark: 'BM',
@@ -148,8 +165,13 @@ const projects = [
   {
     title: 'Business ERP',
     type: 'Enterprise management system',
+    category: 'ERP System',
+    industry: 'Enterprise',
+    platform: 'Web Dashboard',
     description:
       'A centralized ERP solution covering sales, purchase, inventory and HRMS workflows with dashboards, records, reporting and role-based operations.',
+    role: 'Dashboard and business workflow development',
+    features: ['Sales and purchase', 'Inventory control', 'HRMS workflows', 'Role-based reporting'],
     tags: ['React.js', 'Redux', 'REST API', 'Dashboard'],
     accent: 'pink',
     mark: 'ERP',
@@ -158,12 +180,53 @@ const projects = [
   {
     title: 'Hospital HMS',
     type: 'Paperless hospital ERP',
+    category: 'ERP System',
+    industry: 'Healthcare',
+    platform: 'Web Dashboard',
     description:
       'A paperless hospital management system covering OPD, IPD and Physiotherapy, with patient registration, appointments, billing, pharmacy, laboratory, staff and clinical records.',
+    role: 'Frontend architecture and healthcare modules',
+    features: ['OPD and IPD', 'Appointments and billing', 'Pharmacy and laboratory', 'Clinical records'],
     tags: ['Angular', 'RxJS', 'REST API', 'Dashboard'],
     accent: 'teal',
     mark: 'HMS',
     detail: 'Paperless clinical operations',
+  },
+]
+
+const clientHighlights = [
+  {
+    title: 'Clear communication',
+    text: 'Regular progress updates, practical technical discussions and early visibility into implementation decisions.',
+    context: 'Product collaboration',
+  },
+  {
+    title: 'Reliable delivery',
+    text: 'Responsive interfaces developed around real business workflows, API requirements and release priorities.',
+    context: 'Web and mobile delivery',
+  },
+  {
+    title: 'Long-term thinking',
+    text: 'Reusable components and maintainable frontend patterns designed to support future product growth.',
+    context: 'Engineering quality',
+  },
+]
+
+const applicationTypes = [
+  {
+    count: '02',
+    title: 'ERP Systems',
+    text: 'Business and healthcare platforms for managing complex operational workflows.',
+  },
+  {
+    count: '02',
+    title: 'Web Products',
+    text: 'Responsive websites and real-time browser applications built around user goals.',
+  },
+  {
+    count: '03',
+    title: 'Mobile Applications',
+    text: 'Cross-platform React Native experiences for payments, travel and trading.',
   },
 ]
 
@@ -201,6 +264,97 @@ function Icon({ name }) {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
       {paths[name]}
     </svg>
+  )
+}
+
+function ProjectPreview({ project }) {
+  if (project.category === 'Mobile Application') {
+    return (
+      <div className="mobile-preview">
+        <div className="mobile-speaker" />
+        <div className="mobile-header">
+          <span>{project.mark}</span>
+          <i />
+        </div>
+        <div className="mobile-balance">
+          <small>{project.industry}</small>
+          <strong>{project.detail}</strong>
+        </div>
+        <div className="mobile-actions">
+          <i />
+          <i />
+          <i />
+        </div>
+        <div className="mobile-list">
+          <span><i /><b /></span>
+          <span><i /><b /></span>
+          <span><i /><b /></span>
+        </div>
+        <div className="mobile-nav">
+          <i />
+          <i />
+          <i />
+          <i />
+        </div>
+      </div>
+    )
+  }
+
+  if (project.category === 'ERP System') {
+    return (
+      <div className="dashboard-preview">
+        <aside>
+          <strong>{project.mark}</strong>
+          <i className="active" />
+          <i />
+          <i />
+          <i />
+        </aside>
+        <div className="dashboard-content">
+          <div className="dashboard-head">
+            <div>
+              <small>{project.industry} system</small>
+              <strong>{project.detail}</strong>
+            </div>
+            <i />
+          </div>
+          <div className="dashboard-metrics">
+            <span><small>Today</small><b>24</b></span>
+            <span><small>Active</small><b>86</b></span>
+            <span><small>Reports</small><b>12</b></span>
+          </div>
+          <div className="dashboard-table">
+            <strong>Recent operations</strong>
+            <span><i /><b /><em /></span>
+            <span><i /><b /><em /></span>
+            <span><i /><b /><em /></span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="browser-preview">
+      <div className="browser-top">
+        <span><i /><i /><i /></span>
+        <small>{project.mark.toLowerCase()}.product</small>
+      </div>
+      <div className="browser-nav">
+        <strong>{project.mark}</strong>
+        <span><i /><i /><i /></span>
+      </div>
+      <div className="browser-hero">
+        <small>{project.industry}</small>
+        <strong>{project.detail}</strong>
+        <span />
+      </div>
+      <div className="browser-cards">
+        <i />
+        <i />
+        <i />
+      </div>
+    </div>
   )
 }
 
@@ -311,8 +465,8 @@ function App() {
               mobile products with Angular, React, Next.js and React Native.
             </p>
             <div className="hero-actions">
-              <a className="button button--primary" href="#projects">
-                Explore selected work <span aria-hidden="true">-&gt;</span>
+              <a className="button button--primary" href="#applications">
+                Explore applications <span aria-hidden="true">-&gt;</span>
               </a>
               <a className="button button--ghost" href="#contact">
                 Let&apos;s talk
@@ -498,26 +652,39 @@ function App() {
           </div>
         </section>
 
-        <section className="section projects numbered-section" id="projects">
+        <section className="section projects numbered-section" id="applications">
           <div className="section-heading section-heading--row motion-reveal" data-motion>
             <div>
-              <p className="kicker">Selected work</p>
-              <h2>Projects with <span>real purpose.</span></h2>
+              <p className="kicker">Application showcase</p>
+              <h2>Applications built for <span>real workflows.</span></h2>
             </div>
             <p>
-              Product experiences spanning trading, travel, payments,
-              enterprise operations and paperless healthcare.
+              Seven web and mobile applications spanning trading, travel,
+              payments, enterprise operations and paperless healthcare.
             </p>
+          </div>
+
+          <div className="application-types">
+            {applicationTypes.map((item, index) => (
+              <article
+                className="application-type motion-reveal"
+                data-motion
+                style={{ '--motion-delay': `${index * 80}ms` }}
+                key={item.title}
+              >
+                <strong>{item.count}</strong>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              </article>
+            ))}
           </div>
 
           <div className="project-grid">
             {projects.map((project, index) => (
               <article
-                className={`project-card project-card--${project.accent} ${
-                  project.title === 'Hospital HMS' || project.title === 'BN Share Market'
-                    ? 'project-card--featured'
-                    : ''
-                } motion-reveal motion-reveal--scale`}
+                className={`project-card project-card--${project.accent} motion-reveal motion-reveal--scale`}
                 data-motion
                 style={{ '--motion-delay': `${(index % 3) * 90}ms` }}
                 key={project.title}
@@ -525,30 +692,51 @@ function App() {
                 <div className="project-visual">
                   <span className="project-index">{String(index + 1).padStart(2, '0')}</span>
                   <span className="project-label">
-                    {project.title === 'Hospital HMS' ? 'Current flagship' : 'Case study'}
+                    {project.category}
                   </span>
-                  <div className="project-device">
-                    <div className="device-topline">
-                      <span>{project.mark}</span>
-                      <small>{project.detail}</small>
-                    </div>
-                    <div className="device-chart">
-                      <i />
-                      <i />
-                      <i />
-                      <i />
-                      <i />
-                    </div>
-                    <div className="device-footer">
-                      <i />
-                      <i />
-                    </div>
-                  </div>
+                  <ProjectPreview project={project} />
                 </div>
                 <div className="project-info">
-                  <p>{project.type}</p>
-                  <h3>{project.title}</h3>
-                  <span>{project.description}</span>
+                  <div className="project-title-row">
+                    <div>
+                      <p>{project.type}</p>
+                      <h3>{project.title}</h3>
+                    </div>
+                    <span>
+                      {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+                    </span>
+                  </div>
+
+                  <p className="project-description">{project.description}</p>
+
+                  <div className="project-meta">
+                    <span>
+                      <small>Industry</small>
+                      <strong>{project.industry}</strong>
+                    </span>
+                    <span>
+                      <small>Platform</small>
+                      <strong>{project.platform}</strong>
+                    </span>
+                    <span>
+                      <small>Product</small>
+                      <strong>{project.category}</strong>
+                    </span>
+                  </div>
+
+                  <div className="project-case-study">
+                    <div className="project-role">
+                      <small>My contribution</small>
+                      <strong>{project.role}</strong>
+                    </div>
+                    <div className="project-features">
+                      <small>Core features</small>
+                      <ul>
+                        {project.features.map((feature) => <li key={feature}>{feature}</li>)}
+                      </ul>
+                    </div>
+                  </div>
+
                   <div className="tags">
                     {project.tags.map((tag) => <small key={tag}>{tag}</small>)}
                   </div>
@@ -557,6 +745,44 @@ function App() {
               </article>
             ))}
           </div>
+        </section>
+
+        <section className="section reviews numbered-section" id="reviews">
+          <div className="section-heading section-heading--row motion-reveal" data-motion>
+            <div>
+              <p className="kicker">Client feedback</p>
+              <h2>A dependable way of <span>working together.</span></h2>
+            </div>
+            <p>
+              Much of my product work is covered by client confidentiality.
+              Verified professional references are available during the hiring process.
+            </p>
+          </div>
+
+          <div className="review-grid">
+            {clientHighlights.map((highlight, index) => (
+              <article
+                className="review-card motion-reveal motion-reveal--scale"
+                data-motion
+                style={{ '--motion-delay': `${index * 90}ms` }}
+                key={highlight.title}
+              >
+                <span className="review-mark" aria-hidden="true">&ldquo;</span>
+                <p>{highlight.text}</p>
+                <div className="review-meta">
+                  <strong>{highlight.title}</strong>
+                  <span>{highlight.context}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+{/* 
+          <div className="reference-note motion-reveal" data-motion>
+            <span>Need a verified reference?</span>
+            <a href="mailto:hirparaharsh402@gmail.com?subject=Professional%20reference%20request">
+              Request client references <span aria-hidden="true">&nearr;</span>
+            </a>
+          </div> */}
         </section>
 
         <section className="section contact numbered-section" id="contact">
